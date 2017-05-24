@@ -81,7 +81,7 @@ services:
       MYSQL_ROOT_PASSWORD: s3cr3TL33tP@ssw0rd
     networks:
       - galera
-			
+
 networks:
   galera:
     # Use a custom driver
