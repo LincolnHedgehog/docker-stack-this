@@ -69,6 +69,19 @@ services:
       placement:
         constraints: [node.role == worker]
 
+  phpmyadmin:
+    depends_on:
+      - proxy
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: proxy
+      MYSQL_ROOT_PASSWORD: s3cr3TL33tP@ssw0rd
+    networks:
+      - galera
+			
 networks:
   galera:
     # Use a custom driver
