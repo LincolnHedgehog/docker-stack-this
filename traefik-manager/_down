@@ -3,9 +3,9 @@
 # If needed, add permission to make this file executable | chmod +x start
 
 echo; echo "Remove stacks ..."
-docker stack rm proxy
+docker stack rm toolproxy
 sleep 2
-docker stack rm webapp
+docker stack rm toolweb
 sleep 2
 
 echo; echo "Remove network ..."

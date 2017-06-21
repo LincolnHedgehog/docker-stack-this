@@ -13,8 +13,8 @@ echo; echo "Show network..."
 docker network ls | grep "ntw_"
 
 echo; echo "Start the stacks ..."
-docker stack deploy proxy -c proxy.yml
-docker stack deploy tool -c webapp.yml
+docker stack deploy toolproxy -c toolproxy.yml
+docker stack deploy toolweb -c toolweb.yml
 sleep 2
 
 echo; echo "docker stack ls ..."
