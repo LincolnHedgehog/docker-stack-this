@@ -41,8 +41,6 @@ services:
           cpus: '0.30'
           memory: 72M
         reservations:
-          cpus: '0.10'
-          memory: 36M
 
 networks:
   ntw_front:
