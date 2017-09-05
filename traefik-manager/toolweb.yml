@@ -18,7 +18,7 @@ services:
           memory: 8M
       labels:
         - "traefik.backend=home"
-        - "traefik.frontend.rule=Path:/"
+        - "traefik.frontend.rule=Path:/home"
         - "traefik.port=80"
         - "traefik.docker.network=ntw_front"
         - "traefik.backend.loadbalancer.method=wrr"
@@ -95,7 +95,7 @@ services:
         - "traefik.weight=10"
 
   who4:
-    image: jwilder/whoami
+    image: emilevauge/whoami
     networks:
       - ntw_front
     deploy:
