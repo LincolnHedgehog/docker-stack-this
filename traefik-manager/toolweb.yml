@@ -18,7 +18,7 @@ services:
           memory: 8M
       labels:
         - "traefik.backend=home"
-        - "traefik.frontend.rule=Path:/"
+        - "traefik.frontend.rule=PathPrefixStrip:/"
         - "traefik.port=80"
         - "traefik.docker.network=ntw_front"
         - "traefik.backend.loadbalancer.method=wrr"
@@ -110,7 +110,7 @@ services:
           memory: 7M
       labels:
         - "traefik.backend=who4"
-        - "traefik.frontend.rule=PathPrefix:/who4"
+        - "traefik.frontend.rule=PathPrefixStrip:/who4"
         - "traefik.port=80"
         - "traefik.docker.network=ntw_front"
         - "traefik.backend.loadbalancer.method=wrr"
