@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # If needed, add permission to make this file executable | chmod +x start
+# Warning: the file acme.json must have chmod 600 privilege
 
 echo; echo "If not existing, create our network ..."
 
@@ -9,15 +10,26 @@ if [ ! "$(docker network ls --filter name=ntw_front -q)" ];then
   sleep 2
 fi
 
+docker volume create minio1-data
+docker volume create minio2-data
+docker volume create minio3-data
+docker volume create minio4-data
+
 echo; echo "Show network..."
 docker network ls | grep "ntw_"
 
-#
-# Warning: the file acme.json must have chmod 600 privilege
-
 echo; echo "Start the stacks ..."
+
+# traefik
 docker stack deploy toolproxy -c toolproxy.yml
+sleep 2
+
+#webapps
 docker stack deploy toolweb -c toolweb.yml
+sleep 2
+
+#Minio (storage)
+docker stack deploy toolminio -c toolminio.yml
 sleep 2
 
 echo; echo "docker stack ls ..."
@@ -26,12 +38,15 @@ sleep 2
 
 echo; echo;
 
+# Check services deployment
 MIN=1
-MAX=6
+MAX=8
 for ACTION in $(seq $MIN $MAX); do
-  echo "docker service ls | #$ACTION"
+  echo
+  echo "docker service ls | Check $ACTION" of $MAX; echo;
 	docker service ls && echo && sleep 2;
 done
 
+# Check traefik logs
 echo; echo "docker service logs -f proxy_traefik ..."
 docker service logs -f toolproxy_traefik
