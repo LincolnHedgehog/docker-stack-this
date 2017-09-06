@@ -16,25 +16,19 @@ docker network ls | grep "ntw_"
 # Create a volume
 #docker volume create minio1-data
 
-echo; echo "Start the stacks ..."
+echo; echo "Start the stacks ..."; echo; echo 
 
 # traefik
 docker stack deploy toolproxy -c toolproxy.yml
-sleep 2
+echo; echo ; sleep 2
 
 #webapps
 docker stack deploy toolweb -c toolweb.yml
-sleep 2
-
-# Php
-docker stack deploy toolphp -c toolphp.yml
-#sleep 2
+echo; echo ; sleep 2
 
 echo; echo "docker stack ls ..."
-docker stack ls
-sleep 2
-
-echo; echo;
+docker stack ls;
+echo; echo ; sleep 2
 
 # Check services deployment
 MIN=1
@@ -44,7 +38,9 @@ for ACTION in $(seq $MIN $MAX); do
   echo "docker service ls | Check $ACTION" of $MAX; echo;
 	docker service ls && echo && sleep 2;
 done
+echo; echo ; sleep 2
 
 # Check traefik logs
-echo; echo "docker service logs -f proxy_traefik ..."
+echo "docker service logs -f proxy_traefik ..."
 docker service logs -f toolproxy_traefik
+echo; echo ; sleep 2
