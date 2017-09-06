@@ -1,14 +1,18 @@
 version: '3.2'
 
-# FROM https://github.com/minio/minio/blob/master/docs/orchestration/docker-swarm/docker-compose.yaml
-
 services:
   minio1:
     image: minio/minio:RELEASE.2017-08-05T00-00-53Z
+    labels:
+      - "traefik.backend=minio1"
+      - "traefik.frontend.rule=PathPrefixStrip:/minio1"
+      - "traefik.port=9000"
+      - "traefik.docker.network=ntw_front"
+      - "traefik.backend.loadbalancer.method=wrr"
+      - "traefik.backend.loadbalancer.swarm=true"
+      - "traefik.weight=10"
     volumes:
       - minio1-data:/export
-    ports:
-      - "9001:9000"
     networks:
       - ntw_front
     environment:
@@ -21,12 +25,19 @@ services:
         window: 60s
     command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
 
+
   minio2:
     image: minio/minio:RELEASE.2017-08-05T00-00-53Z
+    labels:
+      - "traefik.backend=minio2"
+      - "traefik.frontend.rule=PathPrefixStrip:/minio2"
+      - "traefik.port=9000"
+      - "traefik.docker.network=ntw_front"
+      - "traefik.backend.loadbalancer.method=wrr"
+      - "traefik.backend.loadbalancer.swarm=true"
+      - "traefik.weight=10"
     volumes:
       - minio2-data:/export
-    ports:
-      - "9002:9000"
     networks:
       - ntw_front
     environment:
@@ -41,10 +52,16 @@ services:
 
   minio3:
     image: minio/minio:RELEASE.2017-08-05T00-00-53Z
+    labels:
+      - "traefik.backend=minio3"
+      - "traefik.frontend.rule=PathPrefixStrip:/minio3"
+      - "traefik.port=9000"
+      - "traefik.docker.network=ntw_front"
+      - "traefik.backend.loadbalancer.method=wrr"
+      - "traefik.backend.loadbalancer.swarm=true"
+      - "traefik.weight=10"
     volumes:
       - minio3-data:/export
-    ports:
-      - "9003:9000"
     networks:
       - ntw_front
     environment:
@@ -59,10 +76,16 @@ services:
 
   minio4:
     image: minio/minio:RELEASE.2017-08-05T00-00-53Z
+    labels:
+      - "traefik.backend=minio4"
+      - "traefik.frontend.rule=PathPrefixStrip:/minio4"
+      - "traefik.port=9000"
+      - "traefik.docker.network=ntw_front"
+      - "traefik.backend.loadbalancer.method=wrr"
+      - "traefik.backend.loadbalancer.swarm=true"
+      - "traefik.weight=10"
     volumes:
       - minio4-data:/export
-    ports:
-      - "9004:9000"
     networks:
       - ntw_front
     environment:
@@ -87,3 +110,5 @@ volumes:
 networks:
   ntw_front:
     external: true
+
+# Based on https://github.com/minio/minio/blob/master/docs/orchestration/docker-swarm/docker-compose.yaml
