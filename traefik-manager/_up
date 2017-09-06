@@ -27,8 +27,8 @@ docker stack deploy toolweb -c toolweb.yml
 sleep 2
 
 #Minio (storage)
-docker stack deploy toolminio -c toolminio.yml
-sleep 2
+#docker stack deploy toolminio -c toolminio.yml
+#sleep 2
 
 echo; echo "docker stack ls ..."
 docker stack ls
