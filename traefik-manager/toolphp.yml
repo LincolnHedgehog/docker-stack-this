@@ -2,30 +2,23 @@ version: '3.2'
 
 services:
 
-  minio:
-    image: minio/minio
+  php:
+    image: php:alpine
     labels:
-      - "traefik.backend=minio"
-      - "traefik.frontend.rule=PathPrefixStrip:/minio"
-      - "traefik.port=9000"
+      - "traefik.backend=php"
+      - "traefik.frontend.rule=PathPrefix:/php"
+      - "traefik.port=80"
       - "traefik.docker.network=ntw_front"
       - "traefik.backend.loadbalancer.method=wrr"
       - "traefik.backend.loadbalancer.swarm=true"
       - "traefik.weight=10"
     networks:
       - ntw_front
-    environment:
-      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
-      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
     deploy:
       restart_policy:
         delay: 10s
         max_attempts: 10
         window: 60s
-    command: server /data
-
-volumes:
-  minio1-data:
 
 networks:
   ntw_front:
