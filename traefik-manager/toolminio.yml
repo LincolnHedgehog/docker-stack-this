@@ -3,7 +3,7 @@ version: '3.2'
 services:
 
   minio:
-    image: minio
+    image: minio:minio
     labels:
       - "traefik.backend=minio"
       - "traefik.frontend.rule=PathPrefixStrip:/minio"
