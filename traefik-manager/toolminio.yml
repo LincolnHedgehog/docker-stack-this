@@ -1,18 +1,19 @@
 version: '3.2'
 
 services:
-  minio1:
-    image: minio/minio:RELEASE.2017-08-05T00-00-53Z
+
+  minio:
+    image: minio
     labels:
-      - "traefik.backend=minio1"
-      - "traefik.frontend.rule=PathPrefixStrip:/minio1"
+      - "traefik.backend=minio"
+      - "traefik.frontend.rule=PathPrefixStrip:/minio"
       - "traefik.port=9000"
       - "traefik.docker.network=ntw_front"
       - "traefik.backend.loadbalancer.method=wrr"
       - "traefik.backend.loadbalancer.swarm=true"
       - "traefik.weight=10"
     volumes:
-      - minio1-data:/export
+      - minio1-data:/data
     networks:
       - ntw_front
     environment:
@@ -23,92 +24,11 @@ services:
         delay: 10s
         max_attempts: 10
         window: 60s
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
-
-
-  minio2:
-    image: minio/minio:RELEASE.2017-08-05T00-00-53Z
-    labels:
-      - "traefik.backend=minio2"
-      - "traefik.frontend.rule=PathPrefixStrip:/minio2"
-      - "traefik.port=9000"
-      - "traefik.docker.network=ntw_front"
-      - "traefik.backend.loadbalancer.method=wrr"
-      - "traefik.backend.loadbalancer.swarm=true"
-      - "traefik.weight=10"
-    volumes:
-      - minio2-data:/export
-    networks:
-      - ntw_front
-    environment:
-      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
-      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
-
-  minio3:
-    image: minio/minio:RELEASE.2017-08-05T00-00-53Z
-    labels:
-      - "traefik.backend=minio3"
-      - "traefik.frontend.rule=PathPrefixStrip:/minio3"
-      - "traefik.port=9000"
-      - "traefik.docker.network=ntw_front"
-      - "traefik.backend.loadbalancer.method=wrr"
-      - "traefik.backend.loadbalancer.swarm=true"
-      - "traefik.weight=10"
-    volumes:
-      - minio3-data:/export
-    networks:
-      - ntw_front
-    environment:
-      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
-      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
-
-  minio4:
-    image: minio/minio:RELEASE.2017-08-05T00-00-53Z
-    labels:
-      - "traefik.backend=minio4"
-      - "traefik.frontend.rule=PathPrefixStrip:/minio4"
-      - "traefik.port=9000"
-      - "traefik.docker.network=ntw_front"
-      - "traefik.backend.loadbalancer.method=wrr"
-      - "traefik.backend.loadbalancer.swarm=true"
-      - "traefik.weight=10"
-    volumes:
-      - minio4-data:/export
-    networks:
-      - ntw_front
-    environment:
-      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
-      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-    deploy:
-      restart_policy:
-        delay: 10s
-        max_attempts: 10
-        window: 60s
-    command: server http://minio1/export http://minio2/export http://minio3/export http://minio4/export
+    command: server /data
 
 volumes:
   minio1-data:
 
-  minio2-data:
-
-  minio3-data:
-
-  minio4-data:
-
 networks:
   ntw_front:
     external: true
-
-# Based on https://github.com/minio/minio/blob/master/docs/orchestration/docker-swarm/docker-compose.yaml
