@@ -28,7 +28,6 @@ address = ":8080"
   address = ":443"
   	[entryPoints.https.tls]
        #[[entryPoints.https.tls.certificates]]
-       #PROD values to update
        #CertFile = "/etc/traefik/demoselfsign.crt"
        #KeyFile = "/etc/traefik/demoselfsign.key"
 
