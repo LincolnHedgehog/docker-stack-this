@@ -49,12 +49,12 @@ git clone https://github.com/pascalandy/docker-stack-this.git
 cd docker-stack-this/traefik-manager
 
 # If you prefer to use a branch...
-# git checkout 1.05; sleep 1;
+git checkout 1.05; sleep 1;
 
 # Needed to mount the volume
 mkdir -p /mnt/DeployGRP/tooldata/traefik/
 touch /mnt/DeployGRP/tooldata/traefik/acme.json
-chmod 600 /mnt/DeployGRP/tooldata/traefik/acme.json
+chmod 640 /mnt/DeployGRP/tooldata/traefik/acme.json
 
 # Launch all services
 ./_up
