@@ -96,29 +96,6 @@ services:
         - "traefik.backend.loadbalancer.swarm=true"
         - "traefik.weight=10"
 
-  who4:
-    image: emilevauge/whoami
-    networks:
-      - ntw_front
-    deploy:
-      replicas: 2
-      placement:
-        constraints: [node.role==manager]
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          cpus: '0.20'
-          memory: 7M
-      labels:
-        - "traefik.backend=who4"
-        - "traefik.frontend.rule=PathPrefixStrip:/who4"
-        - "traefik.port=80"
-        - "traefik.docker.network=ntw_front"
-        - "traefik.backend.loadbalancer.method=wrr"
-        - "traefik.backend.loadbalancer.swarm=true"
-        - "traefik.weight=10"
-
 networks:
   ntw_front:
     external: true
