@@ -43,7 +43,7 @@ address = ":8080"
 ################################################################
 [acme]
 #PROD value to update
-email = "somedummyuser@provider.net"
+email = "dummyuser8u3ghs6@gmail.com"
 
 storage = "/etc/traefik/acme/acme.json"
 entryPoint = "https"
